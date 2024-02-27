@@ -1,12 +1,14 @@
 import { combineReducers } from 'redux';
 import { configureStore } from '@reduxjs/toolkit';
-import { userLoginReducer, userRegisterReducer, verifyOTPReducer } from './reducers/userReducers';
+import { userLoginReducer, userRegisterReducer, verifyOTPReducer, sendResetPasswordEmailReducer, resetPasswordReducer } from './reducers/userReducers';
 
 const reducer = combineReducers({
     // Add your reducers here
     userLogin: userLoginReducer,
     userRegister: userRegisterReducer,
     verifyOTP: verifyOTPReducer, // Include the new reducer here
+    sendResetPasswordEmail: sendResetPasswordEmailReducer,
+    resetPassword: resetPasswordReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo') ? 

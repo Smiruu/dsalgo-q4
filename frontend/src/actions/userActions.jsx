@@ -9,6 +9,12 @@ import {
     VERIFY_OTP_REQUEST,
     VERIFY_OTP_SUCCESS,
     VERIFY_OTP_FAIL,
+    SEND_RESET_PASSWORD_EMAIL_REQUEST,
+    SEND_RESET_PASSWORD_EMAIL_SUCCESS,
+    SEND_RESET_PASSWORD_EMAIL_FAIL,
+    RESET_PASSWORD_REQUEST,
+    RESET_PASSWORD_SUCCESS,
+    RESET_PASSWORD_FAIL,
   } from "../constants/userConstants";
   import axios from "axios";
 
@@ -117,6 +123,71 @@ import {
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message,
+      });
+    }
+  };
+
+
+  export const sendResetPasswordEmail = (email) => async (dispatch) => {
+    try {
+      dispatch({
+        type: SEND_RESET_PASSWORD_EMAIL_REQUEST,
+      });
+  
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      };
+  
+      const { data } = await axios.post(
+        "/api/send-reset-password-email/",
+        { email },
+        config
+      );
+  
+      dispatch({
+        type: SEND_RESET_PASSWORD_EMAIL_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: SEND_RESET_PASSWORD_EMAIL_FAIL,
+        payload:
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message,
+      });
+    }
+  };
+
+  export const resetPassword = (uidb64, token, password1, password2) => async (dispatch) => {
+    try {
+      dispatch({
+        type: RESET_PASSWORD_REQUEST,
+      });
+  
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      };
+  
+      const body = { password1, password2 };
+  
+      const { data } = await axios.post(`/api/reset-password/${uidb64}/${token}/`, body, config);
+  
+      dispatch({
+        type: RESET_PASSWORD_SUCCESS,
+        payload: data,
+      });
+    } catch (error) {
+      dispatch({
+        type: RESET_PASSWORD_FAIL,
+        payload:
+          error.response && error.response.data.detail
+            ? error.response.data.detail
+            : 'Something went wrong with resetting the password.',
       });
     }
   };

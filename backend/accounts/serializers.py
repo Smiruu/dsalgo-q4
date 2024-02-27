@@ -51,3 +51,7 @@ class OTPSerializer(serializers.ModelSerializer):
     class Meta:
         model = OTP
         fields = ('id', 'user', 'otp', 'created_at')
+
+class ResetPasswordSerializer(serializers.Serializer):
+    password1 = serializers.CharField(max_length=128)
+    password2 = serializers.CharField(max_length=128)

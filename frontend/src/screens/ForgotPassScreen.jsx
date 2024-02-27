@@ -1,5 +1,3 @@
-// ForgotPassScreen.jsx
-
 import React, { useState } from 'react';
 import {
   Avatar,
@@ -12,10 +10,12 @@ import {
 
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { Link } from "react-router-dom";
-
+import { useDispatch } from "react-redux";
 import FormContainer from "../components/FormContainer";
+import { sendResetPasswordEmail } from "../actions/userActions";
 
 function ForgotPassScreen() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [message, setMessage] = useState('');
 
@@ -23,12 +23,15 @@ function ForgotPassScreen() {
     setEmail(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Here you would typically make an API call to send a password reset email
-    // For this example, let's just display a message
-    setMessage(`Password reset email sent to ${email}`);
+    try {
+      await dispatch(sendResetPasswordEmail(email));
+      setMessage(`Password reset email sent to ${email}`);
+    } catch (error) {
+      setMessage(error.message);
+    }
   };
 
   return (

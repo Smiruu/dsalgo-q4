@@ -11,10 +11,15 @@ const VerifyOTPScreen = ({ history }) => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    dispatch(verifyOTP({ otp })); // Pass email and OTP for verification
+    dispatch(verifyOTP({ otp }));
   };
-  console.log(otp)
-  
+
+  // Redirect to "/" when success is true
+  React.useEffect(() => {
+    if (success) {
+      window.location.href = '/'; // Redirect to "/"
+    }
+  }, [success]);
 
   return (
     <div>

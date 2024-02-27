@@ -11,6 +11,7 @@ import Footer from "./components/Footer";
 import ProfileScreen from "./screens/ProfileScreen";
 import ForgotPassScreen from "./screens/ForgotPassScreen";
 import VerifyOTPScreen from "./screens/VerifyOTPScreen";
+import ChangePasswordScreen from "./screens/ChangePasswordScreen";
 
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
               <Route path='profile/' element={<ProfileScreen />} />
               <Route path='/auth/reset-password/' element={<ForgotPassScreen />} />
               <Route path='/verify-otp/' element={<VerifyOTPScreen />} />
+              <Route path="/reset-password/:uidb64/:token" element={<ChangePasswordScreen />} />
             </Routes>
           </Container>
         </main>
